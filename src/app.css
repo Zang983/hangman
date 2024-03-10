@@ -1,3 +1,45 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    html {
+        font-family: "Mouse Memoirs", sans-serif;
+        font-weight: 400;
+        font-style: normal;
+
+    }
+    body{
+        min-height: 100vh;
+        background-image: url("/assets/images/background-mobile.svg");
+        @media screen and (min-width : 768px){
+        background-image: url("/assets/images/background-tablet.svg");
+        };
+        @media screen and (min-width : 1024px){
+            background-image: url("/assets/images/background-desktop.svg");
+        }
+        background-repeat:no-repeat;
+        background-size: cover;
+    }
+}
+
+.text-shadow-example::before{
+    content:attr(data-content);
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:-1;
+    -webkit-text-stroke:16px #243041;
+    font-size:1em;
+}
+.linearBg::before{
+    content:"";
+    position:absolute;
+    top:0;
+    left:0;
+    opacity: 75%;
+    z-index: -1;
+    height: 100%;
+    width:100%;
+    background: linear-gradient(0deg, rgba(26,4,58,1) 0%, rgba(21,18,120,1) 70%, rgba(26,4,58,1) 100%);
+}

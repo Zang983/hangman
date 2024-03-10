@@ -2,10 +2,13 @@ import { ReactElement } from "react"
 
 function Layout({ children }: { children: ReactElement }) {
     return (
-
-        <main className="bg-bgDesktop bg-no-repeat bg-cover h-[100vh] w-full">
+        <div className="w-full h-full linearBg  tracking-widest
+        pl-[25px] pr-[26px]
+        tablet:pl-[40px] tablet:pr-[48px] 
+        desktop:px-[112px] 
+        ">
             {children}
-        </main>
+        </div>
     )
 }
 
