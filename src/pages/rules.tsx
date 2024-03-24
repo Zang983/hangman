@@ -25,14 +25,14 @@ function Rules() {
             desktop:pt-20 dekstop:pb-16  ">
                 {/* <Link to="/" className="">Accueil</Link> */}
                 <ReturnButton />
-                <LinearTitle >How to Play</LinearTitle>
+                <LinearTitle  >How to Play</LinearTitle>
             </header>
             <main className="
             flex flex-col gap-6
             tablet:gap-8   tablet:mt-[100px]
             desktop:grid desktop:grid-cols-3 desktop:w-full">
                 {
-                    rules.map((rule, index) => <Rule rank={index + 1} title={rule.title}>{rule.description}</Rule>)
+                    rules.map((rule, index) => <Rule key={index} rank={index + 1} title={rule.title}>{rule.description}</Rule>)
                 }
             </main>
         </>

@@ -21,7 +21,7 @@ function Config() {
       desktop:mt-[155px]   desktop:gap-y-[50px]
       ">
         {
-          category.map((item)=><CategoryThumbnail name={item} />)
+          category.map((item,index)=><CategoryThumbnail key={index} name={item} />)
         }
       </main>
     </>
