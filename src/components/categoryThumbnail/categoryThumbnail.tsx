@@ -4,7 +4,7 @@ import { GameContext } from "../../context/gameContext"
 
 export const CategoryThumbnail = ({ name }: { name: string }) => {
     const context=useContext(GameContext)
-    return (<Link to={`/game?category=${name}`}
+    return (<Link to={`/game`}
     onClick={()=>{
         context.newGame()
         context.setCategory(name.toUpperCase())
