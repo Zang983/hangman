@@ -11,7 +11,7 @@ export const Modale = () => {
 
     const context = useContext(GameContext)
     const navigate = useNavigate()
-    const status=context.state.gameStatus
+    const status=context.gameStatus
 
     useEffect(()=>{
         if(status!=="PENDING")

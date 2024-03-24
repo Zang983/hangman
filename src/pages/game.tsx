@@ -12,13 +12,12 @@ function Game() {
 
     const context = useContext(GameContext)
     const navigate = useNavigate()
-    const status = context.state.gameStatus
+    const status = context.gameStatus
 
-    const handleKeyboard = (e) => {
+    const handleKeyboard = (e:KeyboardEvent) => {
         if (status === "PAUSED" || status === "PENDING") {
             if (e.key === "Escape") {
                 e.preventDefault()
-                console.log(status)
                 context.setGameStatus(status === "PENDING" ? "PAUSED" : "PENDING")
             }
         }
@@ -27,18 +26,18 @@ function Game() {
             submitInput(char)
     }
 
-    const submitInput = (letter) => {
-        if (context.state.life < 8)
+    const submitInput = (letter:string) => {
+        if (context.life < 8)
             context.setInputUser(letter)
     }
 
     useEffect(() => {
         document.addEventListener("keydown", handleKeyboard)
         return () => document.removeEventListener("keydown", handleKeyboard)
-    }, [context.state.gameStatus])
+    }, [context.gameStatus])
 
     useEffect(() => {
-        context.state.category === "" && navigate("/config")
+        context.category === "" && navigate("/config")
     }, [])
 
     return (
@@ -54,13 +53,13 @@ function Game() {
                 tablet:text-xl tablet:uppercase tablet:ml-8
                 desktop:text-2xl desktop:capitalize desktop:ml-[57px]
                 ">
-                        {context.state.category.toLowerCase()}
+                        {context.category.toLowerCase()}
                     </h1>
                 </div>
                 <div className="flex items-center gap-4
                 tablet:gap-10
                 ">
-                    <LifeBar life={context.state.life} />
+                    <LifeBar life={context.life} />
                     <svg
                         className="
                     w-[26px] h-6

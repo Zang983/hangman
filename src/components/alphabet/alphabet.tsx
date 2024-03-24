@@ -11,7 +11,7 @@ export const Alphabet = ({submitInput}:{submitInput:(letter:string)=>void}) => {
     }
 
 
-    const usedLetter = context.state.inputs
+    const usedLetter = context.inputs
     return (
         <div className="flex flex-wrap
         gap-2
@@ -27,7 +27,7 @@ export const Alphabet = ({submitInput}:{submitInput:(letter:string)=>void}) => {
                     desktop:w-[109px] `}
                     key={letter}
                     onClick={() => submitInput(letter)}
-                    disabled={(usedLetter.indexOf(letter.toUpperCase()) !== -1 || context.state.life >= 8)}
+                    disabled={(usedLetter.indexOf(letter.toUpperCase()) !== -1 || context.life >= 8)}
                 >
                     {letter}
                 </button>)

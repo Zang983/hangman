@@ -1,6 +1,0 @@
-Il faut : 
-
-
-- Faire le typage du context.
-
-- Faire une fonction permettant, lorsqu'il y'a plusieurs mots de ne pas tronquer un mot et de le mettre directement à la deuxième ligne ? sinon rajouter un flex-wrap

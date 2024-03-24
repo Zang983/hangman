@@ -1,5 +1,4 @@
 export const getData = async () =>{
-
     const datas = await fetch("/data.json")
     if(datas.ok)
         {

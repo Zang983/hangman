@@ -26,7 +26,7 @@ export const WordToFind = () => {
     desktop:mb-[120px] desktop:gap-4">
 
         {
-            context.state.wordToFind.map((letter:Letter, index: number) => {
+            context.wordToFind.map((letter:Letter, index: number) => {
                 return <DisplayedLetter letter={letter} key={index} />
             })
         }

@@ -1,32 +1,51 @@
 import { createContext, useEffect, useReducer } from "react";
 import { checkLetterInWord, checkWin, displaySigns, getData, getRandomInt } from "../util/functions";
+import { Action } from "./actionTypes";
 
-interface State {
+
+interface GameState {
     datas: { name: string, entries: { name: string, selected: boolean }[], wordFinded: number }[],
     wordToFind: { letter: string, finded: boolean }[],
     inputs: string[],
-    gameStatus: "PENDING" | "PAUSE" | "WIN" | "LOSE",
+    gameStatus: string, // "PENDING" | "PAUSE" | "WIN" | "LOSE"
     category: string,
     life: number,
     stringWord?: string
 }
+interface GameContextType extends GameState {
+    setCategory: (name: string) => void,
+    changeWordToFind: () => void,
+    setWordFinded: () => void,
+    setInputUser: (letter: string) => void,
+    newGame: () => void,
+    incrementLife: () => void,
+    setGameStatus: (status: string) => void
+}
 
-export const GameContext = createContext<State>(null)
 
-/* Création du provider lié au context */
-
-
-const initialState: State = {
-    datas: [],// renvois un tableau d'objet avec les catégories, les objets entrées et le nombre d'entrée trouvées.
+export const GameContext = createContext<GameContextType>({
+    datas: [],
     stringWord: "",
     wordToFind: [],
     inputs: [],
     gameStatus: "PENDING",
     category: "",
     life: 0,
-}
+    setCategory: () => {},
+    changeWordToFind: () => {},
+    setWordFinded: () => {},
+    setInputUser: () => {},
+    newGame: () => {},
+    incrementLife: () => {},
+    setGameStatus: () => {}
+})
 
-const reducer = (state: State, action: { type: string, payload?: any }): State => {
+/* Création du provider lié au context */
+
+
+
+
+const reducer = (state: GameState, action: Action): GameState => {
     switch (action.type) {
         case "getData":
             return {
@@ -43,7 +62,7 @@ const reducer = (state: State, action: { type: string, payload?: any }): State =
                 }
             })
             const choice = possibilities.length > 0 ? possibilities[getRandomInt(possibilities.length - 1)].name : ""
-            let word = []
+            const word = []
             for (const letter of choice.split(''))
                 word.push({ letter: letter, finded: false })
 
@@ -59,7 +78,7 @@ const reducer = (state: State, action: { type: string, payload?: any }): State =
             newData.map((category: { name: string, entries: { name: string, selected: boolean }[], wordFinded: number }) => {
                 if (category.name === state.category) {
                     category.entries.map(entry => {
-                        if (entry.name.toUpperCase() === state.stringWord.toUpperCase())
+                        if (entry.name.toUpperCase() === state.stringWord!.toUpperCase())
                             entry.selected = true
                     })
                     category.wordFinded += 1
@@ -75,7 +94,7 @@ const reducer = (state: State, action: { type: string, payload?: any }): State =
             const prevInputs = [...state.inputs]
             if (prevInputs.indexOf(input) !== -1)
                 return { ...state }
-            
+
             prevInputs.push(input)
             const { word, finded } = { ...checkLetterInWord(input, state.wordToFind, state.stringWord!) }
             const newLife = finded ? state.life : state.life + 1
@@ -102,7 +121,15 @@ const reducer = (state: State, action: { type: string, payload?: any }): State =
 }
 
 export const GameProvider = ({ children }: { children: React.ReactNode }) => {
-    const [state, dispatch] = useReducer(reducer, initialState)
+    const [state, dispatch] = useReducer(reducer, {
+        datas: [],// renvois un tableau d'objet avec les catégories, les objets entrées et le nombre d'entrée trouvées.
+        stringWord: "",
+        wordToFind: [],
+        inputs: [],
+        gameStatus: "PENDING",
+        category: "",
+        life: 0
+    })
 
     useEffect(() => {
         const fetchData = async () => {
@@ -138,7 +165,7 @@ export const GameProvider = ({ children }: { children: React.ReactNode }) => {
 
 
 
-    return <GameContext.Provider value={{ state, setCategory, changeWordToFind, setWordFinded, setInputUser, newGame, incrementLife, setGameStatus }}>
+    return <GameContext.Provider value={{ ...state, setCategory, changeWordToFind, setWordFinded, setInputUser, newGame, incrementLife, setGameStatus }}>
         {children}
     </GameContext.Provider>
 }
