@@ -22,8 +22,12 @@ function Game() {
             }
         }
         const char = e.key.toUpperCase()
-        if (char.charCodeAt(0) >= 65 && char.charCodeAt(0) <= (65 + 26))
+        if (char.charCodeAt(0) >= 65 && char.charCodeAt(0) <= (65 + 26) && char.length===1){
+            console.log(char)
             submitInput(char)
+            console.log(e)
+
+        }
     }
 
     const submitInput = (letter:string) => {
